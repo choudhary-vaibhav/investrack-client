@@ -1,0 +1,62 @@
+#dashboard {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+}
+
+#summary {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+#table-card {
+    display: flex;
+    align-self: center;
+    width: 1000px;
+    border-radius: 2px;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+#dashboard > h3 {
+    margin-top: 20px;
+    align-self: center;
+    margin-bottom: 10px;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+  
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+#dashboard > button {
+    position: absolute;
+    margin-top: 90vh;
+    margin-left: 20px;
+    align-self: flex-start;
+    width: 200px;
+    height: 44px;
+    background: #2D2D2F;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    color: white;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+
+    &:hover {
+        box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.4);
+        border-radius: 10px;
+    }
+}

@@ -1,0 +1,25 @@
+.header {
+    margin: 5px;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#header-center-text {
+    font-family: 'IBM Plex Mono';
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 50px;
+}
+
+#avatar {
+    justify-self: flex-end;
+}
+
+#header-line {
+    width: 100vw;
+    height: 0px;
+    margin-bottom: 10px;
+    border: 1px solid #6B6B6B;
+}

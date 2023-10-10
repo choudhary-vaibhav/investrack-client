@@ -4,7 +4,7 @@ export const HomePage = () => {
     
     return <>
         <div className='home'>
-            <div id='investrack'>
+            <div className='investrack'>
                 INVESTRACK
             </div>
 
