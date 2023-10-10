@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+    font-family: 'IBM Plex Mono';
+}
+
+
+.container {
+    display: flex;
+}
+
+
+.left {
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.right {
+    width: 60vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-signin {
+    width: 40vw;
+    height: 60vh;
+    padding-left: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.input-element {
+    font-family: 'IBM Plex Mono';
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.input-box {
+    box-sizing: border-box;
+    width: 480px;
+    height: 40px;
+    background: #FFFFFF;
+    border: 0.5px solid #6B6B6B;
+    border-radius: 5px;
+
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 30px;
+    color:#2D2D2F;
+    padding: 10px;
+}
+
+.submit-button {
+    width: 480px;
+    height: 44px;
+    background: #2D2D2F;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    color: white;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+.submit-button:hover {
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.2);
+}

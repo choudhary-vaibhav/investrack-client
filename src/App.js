@@ -1,13 +1,14 @@
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
+import { SignUp } from './pages/SignUp/SignUp';
+import { SignIn } from './pages/SignIn/SignIn';
 
 function App() {
   return (
-    <h1>hello</h1>
-
-      // <Routes>
-      //   <Route path='/signin' element = { <SignIn/> } exact />
-      // </Routes>
+      <Routes>
+        <Route path='/signup' element = { <SignUp/> } exact />
+        <Route path='/signin' element = { <SignIn/> } exact />
+      </Routes>
   );
 }
 
