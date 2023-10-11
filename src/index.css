@@ -79,3 +79,15 @@ body {
     font-weight: 700;
     justify-self: top;
 }
+
+.loading {
+    margin-top: 10px;
+    width: 480px;
+    display: flex;
+    justify-content: center;
+}
+
+.loading-img {
+    width: 100px;
+    height: 30px;
+}

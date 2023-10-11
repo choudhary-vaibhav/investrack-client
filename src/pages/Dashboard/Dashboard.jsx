@@ -3,37 +3,57 @@ import { Header } from '../../components/Header/Header';
 import { TableRow } from '../../components/TableRow/TableRow';
 import { ValueCard } from '../../components/ValueCard/ValueCard';
 import './Dashboard.css';
+import { API_CLIENT } from '../../services/api-client';
+import loading from '../../assets/loading1.gif';
 
 export const Dashboard = () => {
+    const [load, setLoad] = useState(true);
     const [portfolioArr, setPortfolioArr] = useState([]);
-    const [dashboardObj, setDashboardObj] = useState({});
+    const [noOfInvst, setNoofInvst] = useState(0);
+    const [totalInvst, setTotalInvst] = useState(0);
+    const [rate, setRate] = useState(0);
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
 
     const tempObj = {
-        "_id": "65243e5e314ca6b292ce60f3",
-        "name": "Test",
-        "email": "test1@gmail.com",
-        "password": "$2b$10$AsssKJDMK9VDONhqhpC74edKf6l.UWPKQ1x93FAH5FzZeimceGV1.",
-        "portfolio": [
-            {
-                "name": "SGB",
-                "issueDate": "10/10/23",
-                "value": 20000,
-                "rate": 9.5,
-                "period": 3,
-                "type": "SI",
-                "_id": "652440e01ac9c7212ca7756d"
-            },
-            {
-                "name": "SGB1",
-                "issueDate": "11/10/22",
-                "value": 25000,
-                "rate": 8.5,
-                "period": 3,
-                "type": "SI",
-                "_id": "652599af647112e2d448c8e3"
-            }
-        ],
-        "__v": 0
+        "result": {
+            "_id": "65243e5e314ca6b292ce60f3",
+            "name": "Test",
+            "email": "test1@gmail.com",
+            "password": "$2b$10$AsssKJDMK9VDONhqhpC74edKf6l.UWPKQ1x93FAH5FzZeimceGV1.",
+            "portfolio": [
+                {
+                    "name": "SGB",
+                    "issueDate": "10/10/23",
+                    "value": 20000,
+                    "rate": 9.5,
+                    "period": 3,
+                    "type": "SI",
+                    "_id": "652440e01ac9c7212ca7756d"
+                },
+                {
+                    "name": "SGB1",
+                    "issueDate": "11/10/23",
+                    "value": 25000,
+                    "rate": 8.5,
+                    "period": 3,
+                    "type": "SI",
+                    "_id": "652599af647112e2d448c8e3"
+                },
+                {
+                    "name": "FD",
+                    "issueDate": "10/10/21",
+                    "value": 22000,
+                    "rate": 6.5,
+                    "period": 4,
+                    "type": "SI",
+                    "_id": "6525cdb0c10ef93b925d5c11"
+                }
+            ],
+            "__v": 0
+        },
+        "total": 67000,
+        "rate": 8.17
     };
 
     useEffect(()=>{
@@ -41,25 +61,44 @@ export const Dashboard = () => {
     },[]);
 
     const getPortfolioData = async () => {
+        const Email = sessionStorage.getItem('email');
+        const Name = sessionStorage.getItem('name');
+        setName(Name);
+        setEmail(Email);
         try{
-           setPortfolioArr(tempObj.portfolio);
+            
+            const userObj = {
+                'email': Email,
+            };
+            console.log(userObj)
+            const result = await API_CLIENT.post(process.env.REACT_APP_DASHBOARD_URL, userObj);
+
+            if(result.data){
+                console.log(result.data)
+                setNoofInvst(result.data.result.portfolio.length);
+                setTotalInvst(result.data.total);
+                setPortfolioArr(result.data.portfolio);
+                setRate(result.data.rate);
+                setLoad(false);
+            }
+           setPortfolioArr(tempObj.result.portfolio);
 
         }catch(err){
             console.log(err);
         }
-}
+    }
 
     
 
     return <>
         <div id='dashboard'>
             
-            <Header/>
+            <Header name={name}/>
 
             <div id='summary'>
-                <ValueCard color='#00CD66' text='Total Invested Amount' value='$46,000' />
-                <ValueCard color='#4169E1' text='Number of Investments' value='216' />
-                <ValueCard color='#A020F0' text='Rate of Return' value='+4.16%' />
+                <ValueCard color='#00CD66' text='Total Invested Amount' value={'$'+totalInvst} />
+                <ValueCard color='#4169E1' text='Number of Investments' value={noOfInvst} />
+                <ValueCard color='#A020F0' text='Rate of Return' value={'+'+rate} />
             </div>
 
             <h3>
@@ -77,7 +116,12 @@ export const Dashboard = () => {
                         <th style={{ width: '80px' }} >Interest Type</th>
                         <th style={{ width: '150px' }} >Current Value</th>
                     </tr>
-                    {
+
+                    {load?
+                        <div className='loading'>
+                        <img className='loading-img' src={loading}></img>
+                        </div>
+                        :
                         portfolioArr.map(obj => {
                             console.log(obj);
                             return(

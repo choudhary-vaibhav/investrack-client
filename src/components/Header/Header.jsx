@@ -1,6 +1,6 @@
 import './Header.css';
 
-export const Header = () => {
+export const Header = ({name}) => {
     
     return <>
         <div className='header'>
@@ -11,7 +11,7 @@ export const Header = () => {
                 Investment Portfolio
             </div>
             <div className='investrack' id='avatar'>
-                Hey Vaibhav!
+                Hey {name}!
             </div>
         </div> 
         <div id='header-line'>
