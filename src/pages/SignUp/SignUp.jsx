@@ -61,7 +61,7 @@ export const SignUp = () => {
                 </div>
                 <input ref={pwd} className='input-box' id='password' autocomplete="off"  placeholder='type password' type='password'/>
 
-                <button className='submit-button'>
+                <button onClick={register} className='submit-button'>
                     SignUp
                 </button>
                 {load?

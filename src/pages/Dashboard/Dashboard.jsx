@@ -15,47 +15,6 @@ export const Dashboard = () => {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
 
-    const tempObj = {
-        "result": {
-            "_id": "65243e5e314ca6b292ce60f3",
-            "name": "Test",
-            "email": "test1@gmail.com",
-            "password": "$2b$10$AsssKJDMK9VDONhqhpC74edKf6l.UWPKQ1x93FAH5FzZeimceGV1.",
-            "portfolio": [
-                {
-                    "name": "SGB",
-                    "issueDate": "10/10/23",
-                    "value": 20000,
-                    "rate": 9.5,
-                    "period": 3,
-                    "type": "SI",
-                    "_id": "652440e01ac9c7212ca7756d"
-                },
-                {
-                    "name": "SGB1",
-                    "issueDate": "11/10/23",
-                    "value": 25000,
-                    "rate": 8.5,
-                    "period": 3,
-                    "type": "SI",
-                    "_id": "652599af647112e2d448c8e3"
-                },
-                {
-                    "name": "FD",
-                    "issueDate": "10/10/21",
-                    "value": 22000,
-                    "rate": 6.5,
-                    "period": 4,
-                    "type": "SI",
-                    "_id": "6525cdb0c10ef93b925d5c11"
-                }
-            ],
-            "__v": 0
-        },
-        "total": 67000,
-        "rate": 8.17
-    };
-
     useEffect(()=>{
         getPortfolioData();
     },[]);
@@ -74,14 +33,13 @@ export const Dashboard = () => {
             const result = await API_CLIENT.post(process.env.REACT_APP_DASHBOARD_URL, userObj);
 
             if(result.data){
-                console.log(result.data)
+                console.log(result.data.result.portfolio)
                 setNoofInvst(result.data.result.portfolio.length);
                 setTotalInvst(result.data.total);
-                setPortfolioArr(result.data.portfolio);
+                setPortfolioArr(result.data.result.portfolio);
                 setRate(result.data.rate);
                 setLoad(false);
             }
-           setPortfolioArr(tempObj.result.portfolio);
 
         }catch(err){
             console.log(err);
@@ -109,12 +67,12 @@ export const Dashboard = () => {
                 <table>
                     <tr>
                         <th style={{ width: '150px' }} >Issue Name</th>
-                        <th style={{ width: '150px' }} >Value</th>
+                        <th style={{ width: '150px' }} >Value($)</th>
                         <th style={{ width: '80px' }} >Issue Date</th>
                         <th style={{ width: '80px' }} >Return Rate</th>
                         <th style={{ width: '80px' }} >Time Period</th>
                         <th style={{ width: '80px' }} >Interest Type</th>
-                        <th style={{ width: '150px' }} >Current Value</th>
+                        <th style={{ width: '150px' }} >Current Value($)</th>
                     </tr>
 
                     {load?
@@ -123,7 +81,6 @@ export const Dashboard = () => {
                         </div>
                         :
                         portfolioArr.map(obj => {
-                            console.log(obj);
                             return(
                                 <TableRow object={obj}></TableRow>
                             )
