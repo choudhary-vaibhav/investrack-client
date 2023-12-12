@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Header } from '../../components/Header/Header';
 import { TableRow } from '../../components/TableRow/TableRow';
 import { ValueCard } from '../../components/ValueCard/ValueCard';
@@ -15,6 +15,14 @@ export const Dashboard = () => {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
 
+    //portfolio Object
+    const portfolioName = useRef({});
+    const portfolioRate = useRef({});
+    const portfolioDate = useRef({});
+    const portfolioPeriod = useRef({});
+    const portfolioType = useRef({});
+    const portfolioValue = useRef({});
+
     useEffect(()=>{
         getPortfolioData();
     },[]);
@@ -29,7 +37,7 @@ export const Dashboard = () => {
             const userObj = {
                 'email': Email,
             };
-            console.log(userObj)
+            // console.log(userObj)
             const result = await API_CLIENT.post(process.env.REACT_APP_DASHBOARD_URL, userObj);
 
             if(result.data){
@@ -39,6 +47,31 @@ export const Dashboard = () => {
                 setPortfolioArr(result.data.result.portfolio);
                 setRate(result.data.rate);
                 setLoad(false);
+            }
+
+        }catch(err){
+            console.log(err);
+        }
+    }
+
+    const addToPortfolio = async () => {
+        try{
+            const userObj = {
+                "email": email,
+                "portfolioObj" : {
+                    "name": portfolioName.current.value,
+                    "issueDate": portfolioDate.current.value,
+                    "rate": portfolioRate.current.value,
+                    "period": portfolioPeriod.current.value,
+                    "type": portfolioType.current.value,
+                    "value": portfolioValue.current.value
+                }
+            };
+            // console.log(userObj)
+            const result = await API_CLIENT.post(process.env.REACT_APP_APPEND_URL, userObj);
+
+            if(result.data){
+                window.location.reload();
             }
 
         }catch(err){
@@ -105,22 +138,22 @@ export const Dashboard = () => {
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="issue-name" class="form-label">Issue Name</label>
-                        <input type="text" class="form-control" id="issue-name" placeholder="eg. FD, SGB"/>
+                        <input ref={portfolioName} type="text" class="form-control" id="issue-name" placeholder="eg. FD, SGB"/>
                         <label for="value" class="form-label">Value($)</label>
-                        <input type="text" class="form-control" id="value" placeholder="eg. 10000"/>
+                        <input ref={portfolioValue} type="text" class="form-control" id="value" placeholder="eg. 10000"/>
                         <label for="date" class="form-label">Issue Date</label>
-                        <input type="text" class="form-control" id="date" placeholder="MM/DD/YYYY"/>
+                        <input ref={portfolioDate} type="text" class="form-control" id="date" placeholder="MM/DD/YYYY"/>
                         <label for="period" class="form-label">Time Period</label>
-                        <input type="text" class="form-control" id="period" placeholder="eg. 3 (years)"/>
+                        <input ref={portfolioPeriod} type="text" class="form-control" id="period" placeholder="eg. 3 (years)"/>
                         <label for="type" class="form-label">Type</label>
-                        <input type="text" class="form-control" id="type" placeholder="SI/CI"/>
+                        <input ref={portfolioType} type="text" class="form-control" id="type" placeholder="SI/CI"/>
                         <label for="rate" class="form-label">Return Rate(%)</label>
-                        <input type="text" class="form-control" id="rate" placeholder="eg. 7.5"/>
+                        <input ref={portfolioRate} type="text" class="form-control" id="rate" placeholder="eg. 7.5"/>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Add</button>
+                    <button onClick={addToPortfolio} type="button" class="btn btn-primary">Add</button>
                 </div>
                 </div>
             </div>
